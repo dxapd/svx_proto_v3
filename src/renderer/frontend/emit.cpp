@@ -1,5 +1,5 @@
-#include <vector>
 #include <ranges>
+#include <vector>
 
 #include "renderer/frontend.h"
 #include "solver/final_box.h"
@@ -7,7 +7,8 @@
 namespace Renderer {
 namespace Frontend {
 
-void EmitDrawList(Solver::FinalTree &finalTree, std::vector<Renderer::DrawCmd> &drawList) {
+void EmitDrawList(Solver::FinalTree& finalTree,
+                  std::vector<Renderer::DrawCmd>& drawList) {
     std::vector<Solver::FinalBoxHandle> stack;
     stack.emplace_back(finalTree.GetRootBox());
 
@@ -16,20 +17,16 @@ void EmitDrawList(Solver::FinalTree &finalTree, std::vector<Renderer::DrawCmd> &
         stack.pop_back();
         Solver::FinalBox currBox = finalTree.GetBox(curr);
 
-        Renderer::DrawCmd command = {
-            currBox.x,
-            currBox.y,
-            currBox.width,
-            currBox.height
-        };
+        Renderer::DrawCmd command = {currBox.x, currBox.y, currBox.width,
+                                     currBox.height};
 
         drawList.push_back(command);
 
-        for (auto &child : currBox.children) {
+        for (auto& child : currBox.children) {
             stack.push_back(child);
         }
     }
 }
 
-} // namespace Frontend
-} // namespace Renderer
+}  // namespace Frontend
+}  // namespace Renderer

@@ -2,11 +2,11 @@
 
 #include <vector>
 
-#include "layout/tree.h"
-#include "layout/kinds.h"
 #include "layout/box.h"
-#include "renderer/frontend.h"
+#include "layout/kinds.h"
+#include "layout/tree.h"
 #include "renderer/backend.h"
+#include "renderer/frontend.h"
 
 static constexpr int WIDTH = 800;
 static constexpr int HEIGHT = 600;
@@ -14,35 +14,17 @@ static constexpr int HEIGHT = 600;
 void ConstructTree(Layout::Tree& layoutTree) {
     Layout::BoxHandle viewportBox = layoutTree.GetViewportBox();
 
-    Layout::BoxHandle box_1 = 
-        layoutTree.AddChild(viewportBox, 
-            Layout::Kinds::FreeParams{
-                Layout::Pixels{100}, 
-                Layout::Pixels{100}
-            },
-            Layout::Box{
-                Layout::Kinds::Free{}, 
-                std::monostate{}, 
-                Content::Fit::Fill, 
-                Layout::Pixels{400}, 
-                Layout::Pixels{400}
-            }
-        );
+    Layout::BoxHandle box_1 = layoutTree.AddChild(
+        viewportBox,
+        Layout::Kinds::FreeParams{Layout::Pixels{100}, Layout::Pixels{100}},
+        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+                    Layout::Pixels{400}, Layout::Pixels{400}});
 
-    Layout::BoxHandle box_2 = 
-        layoutTree.AddChild(box_1, 
-            Layout::Kinds::FreeParams{
-                Layout::Pixels{60}, 
-                Layout::Pixels{60}
-            },
-            Layout::Box{
-                Layout::Kinds::Free{}, 
-                std::monostate{}, 
-                Content::Fit::Fill, 
-                Layout::Pixels{100}, 
-                Layout::Pixels{100}
-            }
-        );
+    Layout::BoxHandle box_2 = layoutTree.AddChild(
+        box_1,
+        Layout::Kinds::FreeParams{Layout::Pixels{60}, Layout::Pixels{60}},
+        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+                    Layout::Pixels{100}, Layout::Pixels{100}});
 }
 
 void UpdateTree(Layout::Tree& layoutTree) {
