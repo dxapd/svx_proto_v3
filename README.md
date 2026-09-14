@@ -1,0 +1,1 @@
+A (currently) super basic layout engine, written in the way that I'd want to read it. I used Raylib to do all the rendering so I could focus on everything else to start. Don't ask me where svx_proto_v1 and svx_proto_v2 are.
