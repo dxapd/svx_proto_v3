@@ -42,7 +42,7 @@ void FinalizeTree(Layout::Tree& layoutTree,
                 for (auto& child : layout.children | std::views::reverse) {
                     // this dispatches to the right algorithm via overload.
                     Solver::FinalBox finalBox =
-                        ResolveBox(child, layout, currParent, layoutTree);
+                        SolveBox(child, layout, currParent, layoutTree);
 
                     finalBox.handle =
                         finalTree.AddBox(finalBox, currParent.handle);

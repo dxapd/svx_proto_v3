@@ -4,7 +4,7 @@
 
 namespace Solver {
 
-Solver::FinalBox ResolveBox(
+Solver::FinalBox SolveBox(
     const Layout::Child<Layout::Kinds::FlexParams>& child,
     const Layout::Kinds::Flex& layout,
     const Solver::FinalBox& parent,
