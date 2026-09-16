@@ -6,24 +6,24 @@
 
 namespace Solver {
 
-int ResolvePos(const Layout::LayoutPos& pos,
+int ResolvePos(const Layout::Units::LayoutPos& pos,
                int parentExtent) {
     return std::visit(
-        Util::Overloads{[&](Layout::Pixels px) { return px.value; },
-                        [&](Layout::Percent pc) {
+        Util::Overloads{[&](Layout::Units::Pixels px) { return px.value; },
+                        [&](Layout::Units::Percent pc) {
                             return (int)(parentExtent * pc.value / 100.0f);
                         }},
         pos);
 }
 
-int ResolveSize(const Layout::LayoutSize& size,
+int ResolveSize(const Layout::Units::LayoutSize& size,
                 int parentExtent) {
     return std::visit(Util::Overloads{
-                          [&](Layout::Pixels px) { return px.value; },
-                          [&](Layout::Percent pc) {
+                          [&](Layout::Units::Pixels px) { return px.value; },
+                          [&](Layout::Units::Percent pc) {
                               return (int)(parentExtent * pc.value / 100.0f);
                           },
-                          [&](Layout::Auto a) {
+                          [&](Layout::Units::Auto a) {
                               throw std::runtime_error("Unimplemented");
                               return 0;
                           },

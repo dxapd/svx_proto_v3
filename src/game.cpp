@@ -14,17 +14,41 @@ static constexpr int HEIGHT = 600;
 void ConstructTree(Layout::Tree& layoutTree) {
     Layout::BoxHandle viewportBox = layoutTree.GetViewportBox();
 
-    Layout::BoxHandle box_1 = layoutTree.AddChild(
+    Layout::BoxHandle contentArea = layoutTree.AddChild(
         viewportBox,
-        Layout::Kinds::FreeParams{Layout::Pixels{100}, Layout::Pixels{100}},
-        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
-                    Layout::Pixels{400}, Layout::Pixels{400}});
+        Layout::Kinds::FreeParams{Layout::Units::Pixels{0}, Layout::Units::Pixels{0}},
+        Layout::Box{Layout::Kinds::Flex{Layout::Kinds::Axis::Vertical}, std::monostate{}, Content::Fit::Fill,
+                    {Layout::Units::Pixels{800}, Layout::Units::Pixels{600}}});
 
-    Layout::BoxHandle box_2 = layoutTree.AddChild(
-        box_1,
-        Layout::Kinds::FreeParams{Layout::Pixels{60}, Layout::Pixels{60}},
+    Layout::BoxHandle contentSpacer = layoutTree.AddChild(
+        contentArea,
+        Layout::Kinds::FlexParams{2.0},
         Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
-                    Layout::Pixels{100}, Layout::Pixels{100}});
+                    {Layout::Units::Auto{}, Layout::Units::Auto{}}});
+
+    Layout::BoxHandle dialogueArea = layoutTree.AddChild(
+        contentArea,
+        Layout::Kinds::FlexParams{1.0},
+        Layout::Box{Layout::Kinds::Flex{}, std::monostate{}, Content::Fit::Fill,
+                    {Layout::Units::Auto{}, Layout::Units::Auto{}}});
+
+    Layout::BoxHandle portraitBox = layoutTree.AddChild(
+        dialogueArea,
+        Layout::Kinds::FlexParams{1.0},
+        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+                    {Layout::Units::Pixels{200}, Layout::Units::Auto{}}});
+
+    Layout::BoxHandle textBox = layoutTree.AddChild(
+        dialogueArea,
+        Layout::Kinds::FlexParams{2.0},
+        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+                    {Layout::Units::Auto{}, Layout::Units::Auto{}}});
+
+    Layout::BoxHandle highlightBox = layoutTree.AddChild(
+        dialogueArea,
+        Layout::Kinds::FlexParams{1.0},
+        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+                    {Layout::Units::Pixels{200}, Layout::Units::Auto{}}});
 }
 
 void UpdateTree(Layout::Tree& layoutTree) {

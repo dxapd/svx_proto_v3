@@ -14,8 +14,8 @@ struct FlexParams {
     float weight;
 };
 enum class Axis {
-    Horizontal,
-    Vertical,
+    Horizontal = 0, // x axis
+    Vertical = 1, // y axis
 };
 struct Flex {
     Axis axis;

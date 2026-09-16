@@ -10,10 +10,12 @@ namespace Solver {
 using FinalBoxHandle = size_t;
 
 struct FinalBox {
-    int x;
-    int y;
-    int width;
-    int height;
+    // absolute position vector, indexed by axis
+    // [x, y]
+    int position[2];
+    // calculated box size vector, indexed by axis
+    // [x, y]
+    int extent[2];
 
     Layout::BoxHandle originalBoxHandle;
     Solver::FinalBoxHandle handle;

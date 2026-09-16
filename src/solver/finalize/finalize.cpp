@@ -13,9 +13,9 @@ Solver::FinalBox SolveViewportBox(Layout::Tree& layoutTree,
     return {
         0,
         0,
-        std::get<Layout::Pixels>(layoutTree.GetBox(viewportBoxHandle).width)
+        std::get<Layout::Units::Pixels>(layoutTree.GetBox(viewportBoxHandle).size[0])
             .value,
-        std::get<Layout::Pixels>(layoutTree.GetBox(viewportBoxHandle).height)
+        std::get<Layout::Units::Pixels>(layoutTree.GetBox(viewportBoxHandle).size[1])
             .value,
         viewportBoxHandle,
         0,
@@ -25,12 +25,16 @@ Solver::FinalBox SolveViewportBox(Layout::Tree& layoutTree,
 void FinalizeTree(Layout::Tree& layoutTree,
                   Solver::FinalTree& finalTree) {
     std::vector<Solver::FinalBox> stack;
+    std::vector<Solver::FinalBox> finalBoxes;
+
     Solver::FinalBox finalViewportBox =
         Solver::SolveViewportBox(layoutTree, layoutTree.GetViewportBox());
     finalTree.InitRoot(finalViewportBox);
     stack.push_back(finalViewportBox);
 
     while (!stack.empty()) {
+        finalBoxes.clear();
+
         Solver::FinalBox currParent = std::move(stack.back());
         stack.pop_back();
 
@@ -38,18 +42,16 @@ void FinalizeTree(Layout::Tree& layoutTree,
         // we do that by applying its algorithm across all of its children.
         std::visit(
             [&](const auto& layout) {
-                // iterate in reverse order to maintain the original order
-                for (auto& child : layout.children | std::views::reverse) {
-                    // this dispatches to the right algorithm via overload.
-                    Solver::FinalBox finalBox =
-                        SolveBox(child, layout, currParent, layoutTree);
-
-                    finalBox.handle =
-                        finalTree.AddBox(finalBox, currParent.handle);
-                    stack.push_back(finalBox);
-                }
+                SolveLayout(layout, currParent, layoutTree, finalBoxes);
             },
             layoutTree.GetBox(currParent.originalBoxHandle).layout);
+
+            // iterate in reverse order to maintain the original order
+            for (Solver::FinalBox& box : finalBoxes | std::views::reverse) {
+                box.handle =
+                    finalTree.AddBox(box, currParent.handle);
+                stack.push_back(box);
+            }
     }
 }
 

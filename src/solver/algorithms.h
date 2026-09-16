@@ -7,15 +7,15 @@
 
 namespace Solver {
 
-Solver::FinalBox SolveBox(const Layout::Child<Layout::Kinds::FreeParams>& child, 
-                            const Layout::Kinds::Free& layout,
+void SolveLayout(const Layout::Kinds::Free& layout,
                             const Solver::FinalBox& parent,
-                            Layout::Tree& layoutTree);
+                            Layout::Tree& layoutTree,
+                            std::vector<Solver::FinalBox>& finalBoxes);
 
-Solver::FinalBox SolveBox(const Layout::Child<Layout::Kinds::FlexParams>& child, 
-                            const Layout::Kinds::Flex& layout,
+void SolveLayout(const Layout::Kinds::Flex& layout,
                             const Solver::FinalBox& parent,
-                            Layout::Tree& layoutTree);
+                            Layout::Tree& layoutTree,
+                            std::vector<Solver::FinalBox>& finalBoxes);
 
 } // namespace Solver
 

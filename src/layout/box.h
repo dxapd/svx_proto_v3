@@ -17,8 +17,9 @@ struct Box {
     // How this box should fit its content to its space
     Content::Fit contentFit;
 
-    LayoutSize width;
-    LayoutSize height;
+    // size vector, indexed by axis
+    // [x, y]
+    Layout::Units::LayoutSize size[2];
 };
 
 } // namespace Layout

@@ -17,8 +17,8 @@ void EmitDrawList(Solver::FinalTree& finalTree,
         stack.pop_back();
         Solver::FinalBox currBox = finalTree.GetBox(curr);
 
-        Renderer::DrawCmd command = {currBox.x, currBox.y, currBox.width,
-                                     currBox.height};
+        Renderer::DrawCmd command = {currBox.position[0], currBox.position[1], currBox.extent[0],
+                                     currBox.extent[1]};
 
         drawList.push_back(command);
 

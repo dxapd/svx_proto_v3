@@ -5,8 +5,8 @@
 
 namespace Solver {
 
-int ResolvePos(const Layout::LayoutPos& pos, int parentExtent);
-int ResolveSize(const Layout::LayoutSize& size, int parentExtent);
+int ResolvePos(const Layout::Units::LayoutPos& pos, int parentExtent);
+int ResolveSize(const Layout::Units::LayoutSize& size, int parentExtent);
 
 }
 

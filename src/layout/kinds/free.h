@@ -12,8 +12,8 @@ namespace Kinds {
 struct Free;
 struct FreeParams {
     using Method = Free;
-    LayoutPos x;
-    LayoutPos y;
+    Layout::Units::LayoutPos x;
+    Layout::Units::LayoutPos y;
 };
 
 struct Free {
