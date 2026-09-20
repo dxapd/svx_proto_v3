@@ -6,8 +6,9 @@ Layout::Tree::Tree(int viewportWidth,
                    int viewportHeight)
     : boxes() {
     Layout::Box viewportBox =
-        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
-                    Layout::Units::Pixels{viewportWidth}, Layout::Units::Pixels{viewportHeight}};
+        Layout::Box{Layout::Kinds::Free{}, std::monostate{},
+                    Layout::Units::Pixels{viewportWidth},
+                    Layout::Units::Pixels{viewportHeight}};
 
     boxes.emplace_back(viewportBox);
     viewportBoxHandle = 0;

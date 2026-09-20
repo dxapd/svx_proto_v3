@@ -33,3 +33,5 @@ Solver::FinalBox& Solver::FinalTree::GetBox(
 }
 
 Solver::FinalBoxHandle Solver::FinalTree::GetRootBox() { return rootBoxHandle; }
+
+size_t Solver::FinalTree::Count() const { return finalBoxes.size(); }

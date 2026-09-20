@@ -15,6 +15,7 @@ public:
     Solver::FinalBoxHandle AddBox(Solver::FinalBox finalBox, Solver::FinalBoxHandle parentHandle);
     Solver::FinalBox& GetBox(Solver::FinalBoxHandle finalBoxHandle);
     Solver::FinalBoxHandle GetRootBox();
+    size_t Count() const;
 };
 
 } // namespace Solver

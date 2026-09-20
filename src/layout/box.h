@@ -3,7 +3,7 @@
 
 #include <variant>
 
-#include "content/content.h"
+#include "content/any.h"
 #include "layout/kinds.h"
 #include "layout/units.h"
 
@@ -14,8 +14,6 @@ struct Box {
     Layout::Kinds::Any layout;
     // The content that will go into this box
     Content::Any content;
-    // How this box should fit its content to its space
-    Content::Fit contentFit;
 
     // size vector, indexed by axis
     // [x, y]

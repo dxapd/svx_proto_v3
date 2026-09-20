@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "assets/store.h"
+#include "content/text.h"
 #include "layout/box.h"
 #include "layout/kinds.h"
 #include "layout/tree.h"
@@ -16,38 +18,49 @@ void ConstructTree(Layout::Tree& layoutTree) {
 
     Layout::BoxHandle contentArea = layoutTree.AddChild(
         viewportBox,
-        Layout::Kinds::FreeParams{Layout::Units::Pixels{0}, Layout::Units::Pixels{0}},
-        Layout::Box{Layout::Kinds::Flex{Layout::Kinds::Axis::Vertical}, std::monostate{}, Content::Fit::Fill,
+        Layout::Kinds::FreeParams{Layout::Units::Pixels{0},
+                                  Layout::Units::Pixels{0}},
+        Layout::Box{Layout::Kinds::Flex{Layout::Kinds::Axis::Vertical},
+                    std::monostate{},
                     {Layout::Units::Pixels{800}, Layout::Units::Pixels{600}}});
 
     Layout::BoxHandle contentSpacer = layoutTree.AddChild(
-        contentArea,
-        Layout::Kinds::FlexParams{2.0},
-        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+        contentArea, Layout::Kinds::FlexParams{2.0},
+        Layout::Box{Layout::Kinds::Free{},
+                    std::monostate{},
                     {Layout::Units::Auto{}, Layout::Units::Auto{}}});
 
     Layout::BoxHandle dialogueArea = layoutTree.AddChild(
-        contentArea,
-        Layout::Kinds::FlexParams{1.0},
-        Layout::Box{Layout::Kinds::Flex{}, std::monostate{}, Content::Fit::Fill,
+        contentArea, Layout::Kinds::FlexParams{1.0},
+        Layout::Box{Layout::Kinds::Flex{},
+                    std::monostate{},
                     {Layout::Units::Auto{}, Layout::Units::Auto{}}});
 
     Layout::BoxHandle portraitBox = layoutTree.AddChild(
-        dialogueArea,
-        Layout::Kinds::FlexParams{1.0},
-        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+        dialogueArea, Layout::Kinds::FlexParams{1.0},
+        Layout::Box{Layout::Kinds::Free{},
+                    std::monostate{},
                     {Layout::Units::Pixels{200}, Layout::Units::Auto{}}});
 
+    ;
+    std::string textExample =
+        "Download dugo from dugo.org Download dugo from dugo.org Download dugo "
+        "from dugo.org Download dugo from dugo.org";
+    Content::TextArea textArea = Content::ConstructTextArea(
+        40,
+        Assets::Store::Get().fontAssets.LoadFontFromPath(
+            "C:\\Windows\\Fonts\\impact.ttf"),
+        textExample);
     Layout::BoxHandle textBox = layoutTree.AddChild(
-        dialogueArea,
-        Layout::Kinds::FlexParams{2.0},
-        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+        dialogueArea, Layout::Kinds::FlexParams{2.0},
+        Layout::Box{Layout::Kinds::Free{},
+                    textArea,
                     {Layout::Units::Auto{}, Layout::Units::Auto{}}});
 
     Layout::BoxHandle highlightBox = layoutTree.AddChild(
-        dialogueArea,
-        Layout::Kinds::FlexParams{1.0},
-        Layout::Box{Layout::Kinds::Free{}, std::monostate{}, Content::Fit::Fill,
+        dialogueArea, Layout::Kinds::FlexParams{1.0},
+        Layout::Box{Layout::Kinds::Free{},
+                    std::monostate{},
                     {Layout::Units::Pixels{200}, Layout::Units::Auto{}}});
 }
 
@@ -68,6 +81,8 @@ void RunGame() {
     std::vector<Renderer::DrawCmd> drawList;
 
     Renderer::Backend::Initialize();
+    Assets::Store::Init();
+
     ConstructTree(layoutTree);
 
     while (!Renderer::Backend::Done()) {
@@ -80,5 +95,6 @@ void RunGame() {
         drawList.clear();
     }
 
+    Assets::Store::Cleanup();
     Renderer::Backend::Cleanup();
 }

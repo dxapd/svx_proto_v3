@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "solver/content.h"
 #include "layout/box.h"
 
 namespace Solver {
@@ -20,6 +21,7 @@ struct FinalBox {
     Layout::BoxHandle originalBoxHandle;
     Solver::FinalBoxHandle handle;
     std::vector<Solver::FinalBoxHandle> children;
+    Solver::FinalContent content;
 };
 
 } // namespace Solver
