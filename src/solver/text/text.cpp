@@ -4,13 +4,14 @@
 
 namespace Solver {
 
-// TODO: handle non-text
+// TODO: handle non-text and multiple spans
 Solver::FinalTextArea SolveTextContent(Content::TextArea textArea,
                                        int maxWidth) {
     Solver::FinalTextArea finalTextArea{};
     Solver::Line line{};
 
     std::vector<Assets::Fonts::GlyphRun> brokenRuns;
+    // TODO: handle spaces spilling immediately after words
     for (Content::TextItem& textItem : textArea.textItems) {
         // unneeded variant smell
         Content::TextSpan span = std::get<Content::TextSpan>(textItem);
@@ -71,6 +72,7 @@ Solver::FinalTextArea SolveTextContent(Content::TextArea textArea,
     }
 
     int y = 0;
+    // TODO: get height back to the solver somehow
     for (Assets::Fonts::GlyphRun run : brokenRuns) {
         Solver::Line line;
         Solver::FinalItem finalItem;
